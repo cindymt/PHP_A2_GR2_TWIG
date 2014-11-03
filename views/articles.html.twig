@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - My Articles
+{% endblock %}
+
+{% block content %}
+    {% for article in articles %}
+
+        <article class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+            <header>
+                <h1><a href="/article.php?id={{ article.id }}">{{ article.title }}</a></h1>
+
+                <small>Written by {{ article.user_id }} on {% if article.created_at != '0000-00-00 00:00:00' %}
+                        <time datetime="{{ article.created_at|date('c') }}">{{ article.created_at|date('d-m-Y') }}</time>
+                    {% endif %}</small>
+            </header>
+
+            <div class="content">
+                <p> {{ article.content }} </p>
+            </div>
+            <footer>
+                <p>Posted in category: <a href="/article.php?id={{ article.category_id }}">{{ article.category_id }}</a></p>
+
+                <p><a href="/tag.php?id={{ article.category_id }}].'"><span class="label label-primary">Primary</span></a>
+                </p>
+            </footer>
+        </article>
+
+
+    {% endfor %}
+
+{% endblock %}
+
