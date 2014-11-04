@@ -12,16 +12,14 @@ include __DIR__.'/functions/category.fn.php';
 include __DIR__.'/functions/tag.fn.php';
 $config = include __DIR__.'/config/config.php';
 
-$link = getDatabaseLink($config['database']);
-
 Twig_Autoloader::register();
-
 $loader = new Twig_Loader_Filesystem([
     __DIR__.'/views',
 ]);
 
 $twig = new Twig_Environment($loader, [
-    //'cache' => null,
+    //'cache' = > null,
 ]);
 
+$link = getDatabaseLink($config['database']);
 session_start();

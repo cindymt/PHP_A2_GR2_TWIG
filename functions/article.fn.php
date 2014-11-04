@@ -44,6 +44,7 @@ function getArticles($link, $userId = null, $from = null, $number = null)
     return $articles;
 }
 
+
 /**
  * @param $link
  * @param $categoryId
@@ -62,6 +63,7 @@ function getArticlesFromCategory($link, $categoryId)
 
     return $articles;
 }
+
 
 /**
  * @param $link
@@ -96,6 +98,22 @@ function getArticle($link, $id)
     return mysqli_fetch_assoc($result);
 }
 
+/*PDO
+ function getArticle($link, $article_id)
+{
+    $sql = 'SELECT * FROM article WHERE id = :id';
+
+    $req = $db->prepare($sql);
+		$req->execute(array(
+			':id' => $article_id
+		));
+
+$result = $req->fetch(PDO::FETCH_ASSOC);
+
+		return $result;
+}
+ */
+
 /**
  * @param            $link
  * @param string     $title
@@ -108,6 +126,8 @@ function getArticle($link, $id)
  *
  * @return bool
  */
+
+
 function addArticle($link, $title, $content, $enabled, array $image = null, $category_id, $user_id, $tags = null)
 {
     $imageName = saveArticleImageFile($image);
@@ -118,6 +138,39 @@ function addArticle($link, $title, $content, $enabled, array $image = null, $cat
 
     return $result;
 }
+
+/*PDO
+function addArticle($link, $title, $content, $enabled, array $image = null, $category_id, $user_id, $tags = null)
+{
+    $imageName = saveArticleImageFile($image);
+   $sql = "INSERT INTO article
+			SET
+				title = :title,
+				content = :content,
+                enabled = :enabled,
+                created_at =:createdat,
+                update_at = :updateat,
+                image = :image
+                user_id =:userid,
+		";
+
+		$req = $db->prepare($sql);
+		$req->execute(array(
+			':title' => $title,
+			':content' => $content,
+			':enabled' => $enabled,
+			':createdat' => $created_at,
+			':updateat' => $update_at,
+			':image' => $image,
+			':userid' => $user_id,
+		));
+
+		return true;
+
+	}
+}
+*/
+
 
 /**
  * @param       $link
@@ -170,6 +223,8 @@ function enableArticle($link, $id, $enabled)
     return mysqli_query($link, $sql);
 }
 
+
+
 /**
  * @param $link
  * @param $id
@@ -192,6 +247,28 @@ function removeArticle($link, $id)
     return $successfullyRemoved;
 }
 
+
+/*
+ * PDO
+ * function removeArticle($link, $id)
+{
+    $sqlImage    = 'SELECT image FROM article  WHERE id = :id';
+    $resultImage = $db->prepare($sql);
+    $imageName   = __DIR__.'/../'.PDO::FETCH_ASSOC($resultImage);
+
+   $sql = 'DELETE FROM article WHERE id = :id';
+
+			$successfullyRemoved = $db->prepare($sql);
+			$successfullyRemoved->execute(array(':id' => $user_id);
+
+if ($successfullyRemoved) {
+        removeArticleImageFile($imageName);
+    }
+
+    return $successfullyRemoved;
+}
+
+*/
 /**
  * @param $link
  *
@@ -243,6 +320,8 @@ function removeArticleImageFile($fileName = null)
 
     return null;
 }
+
+
 
 /**
  * @param $string

@@ -29,6 +29,14 @@
 
 
     {% endfor %}
+    <ul class="pagination col-md-12 col-sm-12 col-lg-12 col-xs-12">
+        <li {% if 1 == currentPage or null == currentPage %}class="disabled"{% endif %}><a href="index.php?p={{ currentPage-1 }}">&leftarrow;</a></li>
 
+        {% for i in 1..nbPage %} {# tu peux brancher plusieurs ecran a ton PC pour t'aider a mieu dev  aaa ok#}
+            <li {% if i == currentPage %}class="active"{% endif %}><a href="index.php?p={{ i }}">{{ i }}</a></li>
+        {% endfor %}
+
+        <li {% if nbPage == currentPage or null == currentPage %}class="disabled"{% endif %}><a href="index.php?p={{ currentPage + 1 }}">&rightarrow;</a></li>
+    </ul>
 {% endblock %}
 
